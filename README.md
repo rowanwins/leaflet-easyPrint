@@ -3,6 +3,8 @@
 
 A simple [leaflet](www.leafletjs.com) plugin which adds an icon to print the map. The resulting print page will strip ot the other content on the page and only print the leaflet map div.
 
+Check out the [demo](http://rowanwins.github.com/leaflet-easyPrint/).
+
 ### Usage
 Step 1. Include the required js and css files  
 
