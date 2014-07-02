@@ -11,7 +11,7 @@ Step 1. Include the required js and css files
 Step 2. Ensure your map is contained within the 
 ```html
  <div id="map"></div>
-```html
+```
 
 Step 3. Add the following line of code to your map script
 
