@@ -2,16 +2,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Leaflet Quick Start Guide Example</title>
+	<title>Leaflet easyPrint plugin Demo</title>
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" /></head>
-  <link rel="stylesheet" href="dist/easyPrint.css"/></head>
+ 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" /></head>
+  	<link rel="stylesheet" href="dist/easyPrint.css"/></head>
 
 <body>
-	<p class="hide">Testing</p>
+	<h2>Welcome to the Leaflet easyPrint demo</h2>
+	<p>All this text will be hidden when I print my map</p>
 
 	<div id="map" style="height:400px"></div>
 
@@ -49,18 +50,12 @@
 
 		var popup = L.popup();
 
-		function onMapClick(e) {
-			popup
-				.setLatLng(e.latlng)
-				.setContent("You clicked the map at " + e.latlng.toString())
-				.openOn(map);
-		}
-
 
 		L.easyPrint().addTo(map)
 
 
 	</script>
+	<p>So will this boring sentence.</p>
 
 </body>
 
