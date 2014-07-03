@@ -13,7 +13,7 @@
     	display: none;
 	}
 
-	body #map * {
+	body > #map * {
 		display: block;
 	}
 
