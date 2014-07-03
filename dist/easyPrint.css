@@ -9,12 +9,18 @@
 
 @media print {
 
-	.easyPrint {
+	.easyPrint * {
     	display: none;
 	}
 
-	.easyPrint > #map * {
+	#map, #map * {
 		display: block!important;
+	}
+	
+	#map{
+		position: absolute;
+		left:0;
+		top:0;
 	}
 
 }
