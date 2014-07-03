@@ -9,18 +9,7 @@
 
 @media print {
 
-	.easyPrint * {
-    	display: none;
-	}
-
-	#map, #map * {
-		display: block!important;
-	}
-	
-	#map{
-		position: absolute;
-		left:0;
-		top:0;
-	}
+	html {padding: 0px!important;}
+	.leaflet-control-easyPrint-button{display: none!important;}
 
 }
