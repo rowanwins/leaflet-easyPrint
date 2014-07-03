@@ -9,12 +9,12 @@
 
 @media print {
 
-	body * {
+	.easyPrint {
     	display: none;
 	}
 
-	body > #map * {
-		display: block!important;
+	.easyPrint > #map * {
+		display: block;
 	}
 
 }
