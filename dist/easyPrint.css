@@ -14,7 +14,7 @@
 	}
 
 	body > #map * {
-		display: block;
+		display: block!important;
 	}
 
 }
