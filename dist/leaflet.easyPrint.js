@@ -1,3 +1,5 @@
+
+
 L.Control.EasyPrint = L.Control.extend({
     options: {
         position: 'topleft',
@@ -20,7 +22,7 @@ L.Control.EasyPrint = L.Control.extend({
     },
 });
 
-L.easyPrint = function(options) {
-  return new L.Control.EasyPrint(options);
+L.easyPrint = function() {
+  return new L.Control.EasyPrint();
 };
 
