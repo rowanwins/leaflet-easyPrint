@@ -14,7 +14,7 @@
 	}
 
 	.easyPrint > #map * {
-		display: block;
+		display: block!important;
 	}
 
 }
