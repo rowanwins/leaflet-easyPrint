@@ -10,11 +10,11 @@
 @media print {
 
 	body * {
-    	visibility: hidden;
+    	display: none;
 	}
 
-	#map * {
-		visibility: visible;
+	body #map * {
+		display: block;
 	}
 
 }
