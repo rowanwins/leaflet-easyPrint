@@ -1,28 +1,42 @@
-
-
 L.Control.EasyPrint = L.Control.extend({
-    options: {
-        position: 'topleft',
-        title: 'Print map',
-    },
+	options: {
+		title: 'Print map',
+		position: 'topleft'
+	},
 
-    onAdd: function () {
-        var container = L.DomUtil.create('div', 'leaflet-control-easyPrint leaflet-bar leaflet-control');
+	onAdd: function () {
+		var container = L.DomUtil.create('div', 'leaflet-control-easyPrint leaflet-bar leaflet-control');
 
-        this.link = L.DomUtil.create('a', 'leaflet-control-easyPrint-button leaflet-bar-part', container);
-        this.link.href = 'javascript:void(0)($("#map").print({stylesheet:"easyPrint.css"}))';
+		this.link = L.DomUtil.create('a', 'leaflet-control-easyPrint-button leaflet-bar-part', container);
+		this.link.id = "leafletEasyPrint";
+		this.link.title = this.options.title;
 
-        return container;
-    },
-    
-  
-    _click: function (e) {
-        L.DomEvent.stopPropagation(e);
-        L.DomEvent.preventDefault(e);
-    },
+		L.DomEvent.addListener(this.link, 'click', printPage, this.options);
+
+		return container;
+	}
+
 });
 
-L.easyPrint = function() {
-  return new L.Control.EasyPrint();
+L.easyPrint = function(options) {
+	return new L.Control.EasyPrint(options);
 };
 
+function printPage(){
+	var htmlElementsToHide;
+
+	if (this.elementsToHide){
+		htmlElementsToHide = document.querySelectorAll(this.elementsToHide);  
+
+		for (var i = 0; i < htmlElementsToHide.length; i++) {
+			htmlElementsToHide[i].className = htmlElementsToHide[i].className + ' _epHidden';
+		}
+	}
+
+	window.print();
+
+	for (var i = 0; i < htmlElementsToHide.length; i++) {
+		htmlElementsToHide[i].className = htmlElementsToHide[i].className.replace(' _epHidden','');
+	}
+
+}
