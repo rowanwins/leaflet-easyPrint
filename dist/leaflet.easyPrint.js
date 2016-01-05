@@ -1,7 +1,8 @@
 L.Control.EasyPrint = L.Control.extend({
 	options: {
 		title: 'Print map',
-		position: 'topleft'
+		position: 'topleft',
+		elementsToHide: 'p, h2'
 	},
 
 	onAdd: function () {
@@ -23,20 +24,23 @@ L.easyPrint = function(options) {
 };
 
 function printPage(){
-	var htmlElementsToHide;
 
 	if (this.elementsToHide){
-		htmlElementsToHide = document.querySelectorAll(this.elementsToHide);  
+		var htmlElementsToHide = document.querySelectorAll(this.elementsToHide);  
 
 		for (var i = 0; i < htmlElementsToHide.length; i++) {
 			htmlElementsToHide[i].className = htmlElementsToHide[i].className + ' _epHidden';
 		}
 	}
-
 	window.print();
 
-	for (var i = 0; i < htmlElementsToHide.length; i++) {
-		htmlElementsToHide[i].className = htmlElementsToHide[i].className.replace(' _epHidden','');
+	if (this.elementsToHide){
+		var htmlElementsToHide = document.querySelectorAll(this.elementsToHide);  
+
+		for (var i = 0; i < htmlElementsToHide.length; i++) {
+			htmlElementsToHide[i].className = htmlElementsToHide[i].className.replace(' _epHidden','');
+		}
 	}
+
 
 }

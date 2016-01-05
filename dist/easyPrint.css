@@ -4,10 +4,10 @@
   display: block;
   }
 
-@media print {
+._epHidden{display:none!important;}
 
+
+@media print {
 	html {padding: 0px!important;}
 	.leaflet-control-easyPrint-button{display: none!important;}
-	._epHidden{display:none!important;}
-	
 }
