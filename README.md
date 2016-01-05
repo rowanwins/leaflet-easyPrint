@@ -25,7 +25,7 @@ You can pass a number of options to the plugin to control various settings.
 | ------------- |--------------|--------------|---------------|
 | title | string | 'Print map' | Sets the text which appears as the tooltip of the print button |
 | position | [Leaflet control position](http://leafletjs.com/reference.html#control-positions) | 'topleft' | Position the print button |
-| elementsToHide | string | none | Enables you to pass through a string to html elements to hide when the user prints the page |
+| elementsToHide | string | none | Enables you to pass through a string of html elements to hide when the user prints the page |
 
 Here's an example of passing through some options.
 ``` js

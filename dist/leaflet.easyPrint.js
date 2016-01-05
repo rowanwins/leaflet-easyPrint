@@ -1,8 +1,7 @@
 L.Control.EasyPrint = L.Control.extend({
 	options: {
 		title: 'Print map',
-		position: 'topleft',
-		elementsToHide: 'p, h2'
+		position: 'topleft'
 	},
 
 	onAdd: function () {
