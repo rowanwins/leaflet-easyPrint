@@ -1,7 +1,8 @@
 L.Control.EasyPrint = L.Control.extend({
 	options: {
 		title: 'Print map',
-		position: 'topleft'
+		position: 'topleft',
+		bodyPrintClass: 'leaflet-print'
 	},
 
 	onAdd: function () {
@@ -24,6 +25,9 @@ L.easyPrint = function(options) {
 
 function printPage(){
 
+	var bodyElement = document.querySelector("body");
+	bodyElement.className = bodyElement.className + ' ' + this.bodyPrintClass;
+
 	if (this.elementsToHide){
 		var htmlElementsToHide = document.querySelectorAll(this.elementsToHide);  
 
@@ -33,6 +37,8 @@ function printPage(){
 	}
 	window.print();
 
+	bodyElement.className = bodyElement.className.replace(' ' + this.bodyPrintClass,'');
+
 	if (this.elementsToHide){
 		var htmlElementsToHide = document.querySelectorAll(this.elementsToHide);  
 
@@ -40,6 +46,5 @@ function printPage(){
 			htmlElementsToHide[i].className = htmlElementsToHide[i].className.replace(' _epHidden','');
 		}
 	}
-
-
+	
 }
