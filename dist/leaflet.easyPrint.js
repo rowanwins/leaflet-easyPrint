@@ -31,8 +31,9 @@ function printPage(){
 			htmlElementsToHide[i].className = htmlElementsToHide[i].className + ' _epHidden';
 		}
 	}
+	this.map.fire("beforePrint");
 	window.print();
-
+	this.map.fire("afterPrint");
 	if (this.elementsToHide){
 		var htmlElementsToHide = document.querySelectorAll(this.elementsToHide);  
 
