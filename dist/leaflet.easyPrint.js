@@ -11,7 +11,7 @@ L.Control.EasyPrint = L.Control.extend({
 		this.link.id = "leafletEasyPrint";
 		this.link.title = this.options.title;
 
-		L.DomEvent.addListener(this.link, 'click', printPage, this.options);
+		L.DomEvent.addListener(this.link, 'click', printPage, this);
 		L.DomEvent.disableClickPropagation(container);
 
 		return container;
@@ -25,18 +25,18 @@ L.easyPrint = function(options) {
 
 function printPage(){
 
-	if (this.elementsToHide){
-		var htmlElementsToHide = document.querySelectorAll(this.elementsToHide);  
+	if (this.options.elementsToHide){
+		var htmlElementsToHide = document.querySelectorAll(this.options.elementsToHide);  
 
 		for (var i = 0; i < htmlElementsToHide.length; i++) {
 			htmlElementsToHide[i].className = htmlElementsToHide[i].className + ' _epHidden';
 		}
 	}
-	this.map.fire("beforePrint");
+	this._map.fire("beforePrint");
 	window.print();
-	this.map.fire("afterPrint");
-	if (this.elementsToHide){
-		var htmlElementsToHide = document.querySelectorAll(this.elementsToHide);  
+	this._map.fire("afterPrint");
+	if (this.options.elementsToHide){
+		var htmlElementsToHide = document.querySelectorAll(this.options.elementsToHide);  
 
 		for (var i = 0; i < htmlElementsToHide.length; i++) {
 			htmlElementsToHide[i].className = htmlElementsToHide[i].className.replace(' _epHidden','');
