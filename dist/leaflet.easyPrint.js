@@ -12,6 +12,7 @@ L.Control.EasyPrint = L.Control.extend({
 		this.link.title = this.options.title;
 
 		L.DomEvent.addListener(this.link, 'click', printPage, this.options);
+		L.DomEvent.disableClickPropagation(container);
 
 		return container;
 	}
