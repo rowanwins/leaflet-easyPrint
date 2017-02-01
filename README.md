@@ -1,6 +1,6 @@
 ## leaflet-easyPrint
 
-A simple [leaflet](http://www.leafletjs.com) plugin which adds an icon to print the map.
+A simple [leaflet](http://www.leafletjs.com) plugin which adds an icon to print the map. Compatible with both Leaflet v1+ and 0.7.
 
 Check out the [demo](http://rowanwins.github.com/leaflet-easyPrint/).
 
