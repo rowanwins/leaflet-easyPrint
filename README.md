@@ -4,12 +4,17 @@ A simple [leaflet](http://www.leafletjs.com) plugin which adds an icon to print 
 
 Check out the [demo](http://rowanwins.github.com/leaflet-easyPrint/).
 
+### Download
+You can either download this repo directly or install via NPM.
+````
+    npm install leaflet-easyprint
+````
+
 ### Usage
-**Step 1.** Include the required js and css files in your document. 
+**Step 1.** Include the required js files in your document. 
 
 ```html
-   	<link rel="stylesheet" href="dist/easyPrint.css"/>
-   	<script src="dist/leaflet.easyPrint.js"></script>
+   	<script src="dist/leaflet.easyPrint.js"></script>   	
 ```
 
 **Step 2.** Add the following line of code to your map script
