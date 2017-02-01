@@ -7,21 +7,20 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
- 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" /></head>
-  	<link rel="stylesheet" href="dist/easyPrint.css"/>
-  	<link href='http://fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
-  	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
- 
-<style>
-html {background: #222222; padding: 40px 200px;font-family: 'Lato', sans-serif;}
-h2,p {color: white;}
-.gitButton{padding:15px 30px; background-color: #47a230;text-decoration: none;font-weight: 900; color: white; text-transform:uppercase; transition: background-color .5s;}
-.gitButton:hover {background-color: #1d7806}
-.gitButton:visited {color: white;}
-</style>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	<link href='http://fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	<style>
+		html {background: #222222; padding: 40px 200px;font-family: 'Lato', sans-serif;}
+		h2,p {color: white;}
+		.gitButton{padding:15px 30px; background-color: #47a230;text-decoration: none;font-weight: 900; color: white; text-transform:uppercase; transition: background-color .5s;}
+		.gitButton:hover {background-color: #1d7806}
+		.gitButton:visited {color: white;}
+	</style>
 
 
- </head>
+</head>
 
 <body class="easyPrint">
 	<h2>Welcome to the Leaflet easyPrint demo</h2>
@@ -29,9 +28,9 @@ h2,p {color: white;}
 
 	<div id="map" style="height:400px; width:900px"></div>
 
- <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 
- <script src="dist/leaflet.easyPrint.js"></script>
+	<script src="dist/leaflet.easyPrint.js"></script>
 
 	<script>
 
@@ -44,7 +43,7 @@ h2,p {color: white;}
 
 
 		L.marker([51.5, -0.09]).addTo(map)
-			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+		.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
 
 		L.circle([51.508, -0.11], 500, {
 			color: 'red',
@@ -56,15 +55,15 @@ h2,p {color: white;}
 			[51.509, -0.08],
 			[51.503, -0.06],
 			[51.51, -0.047]
-		]).addTo(map).bindPopup("I am a polygon.");
+			]).addTo(map).bindPopup("I am a polygon.");
 
 
 		var popup = L.popup();
 
 
 		L.easyPrint({
-        	title: 'My awesome print button',
-        	elementsToHide: 'p, h2, .gitButton'
+			title: 'My awesome print button',
+			elementsToHide: 'p, h2, .gitButton'
 		}).addTo(map);
 
 
