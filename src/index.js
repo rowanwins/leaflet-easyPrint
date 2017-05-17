@@ -41,7 +41,9 @@ L.Control.EasyPrint = L.Control.extend({
     mapDiv.parentNode.removeChild(mapDiv);
     wrapper.appendChild(mapDiv);
     wrapper.style.width = mapDiv.style.width;
+    wrapper.style.height = mapDiv.style.height;
     wrapper.style.display = 'inline-block'
+    wrapper.style.overflow = 'hidden';
     return wrapper;
   },
 
@@ -55,12 +57,12 @@ L.Control.EasyPrint = L.Control.extend({
     this._map.fire("beforePrint");
     this.hidePageSizeButtons()
     this.mapContainer = this._map.getContainer();
-    this.outerContainer = this.createOuterContainer(this.mapContainer)
-
     if (event.target.className === 'easyPrintCurrentSize'){
       this.printOpertion();
       return;
-    }
+    }    
+    this.outerContainer = this.createOuterContainer(this.mapContainer)
+
     this.createImagePlaceholder(event.target.className)
   },
 
@@ -73,9 +75,9 @@ L.Control.EasyPrint = L.Control.extend({
         plugin.outerContainer.parentElement.insertBefore(blankDiv, plugin.outerContainer)
         blankDiv.className = 'epHolder'
         blankDiv.style.backgroundImage = 'url("' + dataUrl + '")';
-        blankDiv.style.position = 'relative';
+        blankDiv.style.position = 'absolute';
         blankDiv.style.zIndex = 1011;
-        blankDiv.style.display = 'block'
+        blankDiv.style.display = 'initial'
         blankDiv.style.width = plugin.mapContainer.style.width;
         blankDiv.style.height = plugin.mapContainer.style.height;
         plugin.resizeAndPrintMap(printSize);
@@ -128,10 +130,12 @@ L.Control.EasyPrint = L.Control.extend({
           plugin._map.fire("afterPrint");
           plugin.mapContainer.style.width = plugin.originalMapWidth;
           plugin.mapContainer.style.height = plugin.originalMapHeight;
-          plugin.removeOuterContainer(plugin.mapContainer, plugin.outerContainer, plugin.blankDiv)
-          plugin._map.invalidateSize();
-          plugin._map.setView(plugin.origCenter);
-          plugin._map.setZoom(plugin.origZoom);
+          if (plugin.outerContainer) {
+            plugin.removeOuterContainer(plugin.mapContainer, plugin.outerContainer, plugin.blankDiv)
+            plugin._map.invalidateSize();
+            plugin._map.setView(plugin.origCenter);
+            plugin._map.setZoom(plugin.origZoom);
+          }
       })
       .catch(function (error) {
           console.error('Print operation failed', error);
