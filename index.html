@@ -25,18 +25,16 @@
 <body class="easyPrint">
 	<h2>Welcome to the Leaflet easyPrint demo</h2>
 	<p>All this text will be hidden when I print my map.</p>
-
 	<div id="map" style="height:400px; width:900px"></div>
-
 	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 
-	<script src="dist/leaflet.easyPrint.js"></script>
+	<script src="dist/bundle.js"></script>
 
 	<script>
 
 		var map = L.map('map').setView([51.505, -0.09], 13);
 
-		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}.png', {
 			maxZoom: 18,
 			attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
 		}).addTo(map);
@@ -63,7 +61,10 @@
 
 		L.easyPrint({
 			title: 'My awesome print button',
-			elementsToHide: 'p, h2, .gitButton'
+			elementsToHide: 'p, h2,h3,h5,a,label,nav,select,button,i,legend',
+      tileLayer: tiles,
+      sizeModes: ['CurrentSize', 'A4Landscape', 'A4Portrait'],
+      filename: 'myMap'
 		}).addTo(map);
 
 

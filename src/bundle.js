@@ -1,0 +1,1 @@
+import {} from './index.js';
