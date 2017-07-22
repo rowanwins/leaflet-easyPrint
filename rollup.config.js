@@ -4,7 +4,7 @@ import babel from 'rollup-plugin-babel';
 import uglify from 'rollup-plugin-uglify';
 
 export default {
-  entry: 'src/bundle.js',
+  entry: 'src/main.js',
   format: 'cjs',
   plugins: [ 
     resolve(),

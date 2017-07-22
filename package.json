@@ -27,6 +27,8 @@
   "devDependencies": {
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-latest": "^6.24.1",
+    "eslint": "^4.0.0",
+    "eslint-config-mourner": "^2.0.1",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",

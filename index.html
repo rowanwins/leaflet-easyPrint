@@ -59,17 +59,21 @@
 		var popup = L.popup();
 
 
-		L.easyPrint({
-      tileLayer: tiles,
-      sizeModes: ['CurrentSize', 'A4Landscape', 'A4Portrait'],
-      filename: 'myMap'
+		var printer = L.easyPrint({
+      		tileLayer: tiles,
+      		sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+      		filename: 'myMap',
+      		exportOnly: true,
+      		hideControlContainer: true
 		}).addTo(map);
 
-
+		function myFunction() {
+			printer.printMap('A4Landscape')
+		}
 	</script>
 	<p class="testing">So will this boring sentence.</p>
 	<br><br>
-	<a class="gitButton" href="https://github.com/rowanwins/leaflet-easyPrint"><i class="fa fa-github fa-lg"></i>&nbsp;&nbsp;  Download me on github</a>
+	<button class="gitButton" onclick="myFunction()" href="https://github.com/rowanwins/leaflet-easyPrint"><i class="fa fa-github fa-lg"></i>&nbsp;&nbsp;  Download me on github</button>
 
 </body>
 
