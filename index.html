@@ -14,7 +14,17 @@
 	<style>
 		html {background: #222222; padding: 40px 200px;font-family: 'Lato', sans-serif;}
 		h2,p {color: white;}
-		.gitButton{padding:15px 30px; background-color: #47a230;text-decoration: none;font-weight: 900; color: white; text-transform:uppercase; transition: background-color .5s;}
+		.gitButton{
+			padding:15px 30px;
+			background-color: #47a230;
+			text-decoration: none;
+			font-weight: 900;
+			color: white;
+			text-transform:uppercase;
+			transition: background-color .5s;
+			border: none;
+    		border-radius: 2px;
+		}
 		.gitButton:hover {background-color: #1d7806}
 		.gitButton:visited {color: white;}
 	</style>
@@ -67,13 +77,10 @@
       		hideControlContainer: true
 		}).addTo(map);
 
-		function myFunction() {
-			printer.printMap('A4Landscape')
-		}
 	</script>
 	<p class="testing">So will this boring sentence.</p>
 	<br><br>
-	<button class="gitButton" onclick="myFunction()" href="https://github.com/rowanwins/leaflet-easyPrint"><i class="fa fa-github fa-lg"></i>&nbsp;&nbsp;  Download me on github</button>
+	<a href="https://github.com/rowanwins/leaflet-easyPrint"><button class="gitButton"><i class="fa fa-github fa-lg"></i>&nbsp;&nbsp;  Download me on github</button></a>
 
 </body>
 
