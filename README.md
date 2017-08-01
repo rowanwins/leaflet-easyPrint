@@ -28,6 +28,9 @@ You can pass a number of options to the plugin to control various settings.
 | tileWait | Integer | 500 | How long to wait for the tiles to draw (helpful when resizing) |
 | filename | string | 'map' | Name of the file if export only option set to true |
 | hidden | Boolean | false | Set to true if you don't want to display the toolbar. Instead you can create your own buttons or fire print events programtically. You still need to call `addTo(map)` to set the leaflet map context. |
+| customWindowTItle | string | A title for the print window which will get added the printed paper. |
+| spinnerBgColor | string | A valid css colour for the spinner background color. |
+| customSpinnerClass | string | A class for a custom css spinner to use while waiting for the print. |
 
 
 ### Example
@@ -42,13 +45,13 @@ L.easyPrint({
 ### Methods / Using programmatically
 | Method        | Options      | Description   |
 | --------------|--------------|--------------|
-| printMap(size) | Print size name, either 'CurrentSize', 'A4Portait', 'A4Landscape', or the `className` of a custom size | Manually trigger a print operation |
+| printMap(size, filename) | Print size name, either 'CurrentSize', 'A4Portait', 'A4Landscape', or the `className` of a custom size. And a filename. | Manually trigger a print operation |
 ````
 var printPlugin = L.easyPrint({
 	hidden: true,
 	sizeModes: ['A4Portrait']
 }).addTo(map); 
-printPlugin.printMap('A4Portait');
+printPlugin.printMap('A4Portait', 'MyFileName');
 ````
 
 
@@ -71,7 +74,4 @@ var a3Size = {
 ### Acknowledgements
 Huge hats off go to [mourner](https://github.com/mourner) and all the [contributors](https://github.com/Leaflet/Leaflet/graphs/contributors) to the leaflet.js project, it's an amazing piece of open source software!
 
-ALso uses [dom-to-image](https://github.com/tsayen/dom-to-image) and [FileSaver](https://github.com/eligrey/FileSaver.js) under the hood.
-
-
-And finally thanks to [IcoMoon](http://icomoon.io/) for the print icon.
+Also uses [dom-to-image](https://github.com/tsayen/dom-to-image) and [FileSaver](https://github.com/eligrey/FileSaver.js) under the hood.

@@ -10,7 +10,10 @@ L.Control.EasyPrint = L.Control.extend({
     exportOnly: false,
     hidden: false,
     tileWait: 500,
-    hideControlContainer: true
+    hideControlContainer: true,
+    customWindowTitle: window.document.title,
+    spinnerBgCOlor: '#0DC5C1',
+    customSpinnerClass: 'epLoader'
   },
 
   onAdd: function () { 
@@ -69,10 +72,13 @@ L.Control.EasyPrint = L.Control.extend({
     }
   },
 
-  printMap: function (event) {
+  printMap: function (event, filename) {
+    if (filename) {
+      this.options.filename = filename
+    }
     if (!this.options.exportOnly) {
-      this._page = window.open("about:blank", "_blank", 'toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10, top=10, width=200, height=250, visible=none');
-      this._page.document.write(this._createSpinner());
+      this._page = window.open("", "_blank", 'toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10, top=10, width=200, height=250, visible=none');
+      this._page.document.write(this._createSpinner(this.options.customWindowTitle, this.options.customSpinnerClass, this.options.spinnerBgCOlor));
     }
     this.originalState = {
       mapWidth: this.mapContainer.style.width,
@@ -185,17 +191,17 @@ L.Control.EasyPrint = L.Control.extend({
     this._page.document.close();  
   },
 
-  _createSpinner: function () {
-    return `<html><head></head><body><style>
+  _createSpinner: function (title, spinnerClass, spinnerColor) {
+    return `<html><head><title>`+ title + `</title></head><body><style>
       body{
-        background: #0DC5C1;
+        background: ` + spinnerColor + `;
       }
-      .loader,
-      .loader:before,
-      .loader:after {
+      .epLoader,
+      .epLoader:before,
+      .epLoader:after {
         border-radius: 50%;
       }
-      .loader {
+      .epLoader {
         color: #ffffff;
         font-size: 11px;
         text-indent: -99999em;
@@ -208,12 +214,12 @@ L.Control.EasyPrint = L.Control.extend({
         -ms-transform: translateZ(0);
         transform: translateZ(0);
       }
-      .loader:before,
-      .loader:after {
+      .epLoader:before,
+      .epLoader:after {
         position: absolute;
         content: '';
       }
-      .loader:before {
+      .epLoader:before {
         width: 5.2em;
         height: 10.2em;
         background: #0dc5c1;
@@ -225,7 +231,7 @@ L.Control.EasyPrint = L.Control.extend({
         -webkit-animation: load2 2s infinite ease 1.5s;
         animation: load2 2s infinite ease 1.5s;
       }
-      .loader:after {
+      .epLoader:after {
         width: 5.2em;
         height: 10.2em;
         background: #0dc5c1;
@@ -258,7 +264,7 @@ L.Control.EasyPrint = L.Control.extend({
         }
       }
       </style>
-    <div class="loader">Loading...</div></body></html>`;
+    <div class="`+spinnerClass+`">Loading...</div></body></html>`;
   },
 
   _createNewWindow: function (img, orientation, plugin) {
@@ -287,9 +293,11 @@ L.Control.EasyPrint = L.Control.extend({
   },
 
   _removeOuterContainer: function (mapDiv, outerContainer, blankDiv) {
-    outerContainer.parentNode.insertBefore(mapDiv, outerContainer);
-    outerContainer.parentNode.removeChild(blankDiv);
-    outerContainer.parentNode.removeChild(outerContainer);
+    if (outerContainer.parentNode) {
+      outerContainer.parentNode.insertBefore(mapDiv, outerContainer);
+      outerContainer.parentNode.removeChild(blankDiv);
+      outerContainer.parentNode.removeChild(outerContainer);      
+    }
   },
 
   _addCss: function () {

@@ -14,5 +14,6 @@ export default {
     uglify(),
     commonjs()
   ],
+  sourceMap: true,
   dest: 'dist/bundle.js'
 };

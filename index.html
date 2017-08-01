@@ -6,8 +6,8 @@
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+<!-- 	<script type="text/javascript" src="https://raw.github.com/taylorhakes/promise-polyfill/master/promise.min.js"></script>
+ -->	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
 	<link href='http://fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	
@@ -24,9 +24,23 @@
 			transition: background-color .5s;
 			border: none;
     		border-radius: 2px;
+    		cursor: pointer;
 		}
 		.gitButton:hover {background-color: #1d7806}
 		.gitButton:visited {color: white;}
+		.manualButton {
+			padding:15px 30px;
+			background-color: #308ba2;
+			margin-left: 40px;
+			text-decoration: none;
+			font-weight: 900;
+			color: white;
+			text-transform:uppercase;
+			transition: background-color .5s;
+			border: none;
+    		border-radius: 2px;			
+    		cursor: pointer;
+		}
 	</style>
 
 
@@ -48,7 +62,6 @@
 			maxZoom: 18,
 			attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
 		}).addTo(map);
-
 
 		L.marker([51.5, -0.09]).addTo(map)
 		.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
@@ -77,10 +90,15 @@
       		hideControlContainer: true
 		}).addTo(map);
 
+		function manualPrint () {
+			printer.printMap('CurrentSize', 'MyManualPrint')
+		}
+
 	</script>
 	<p class="testing">So will this boring sentence.</p>
 	<br><br>
 	<a href="https://github.com/rowanwins/leaflet-easyPrint"><button class="gitButton"><i class="fa fa-github fa-lg"></i>&nbsp;&nbsp;  Download me on github</button></a>
+	<button class="manualButton" onclick="manualPrint()">Manual print</button>
 
 </body>
 
