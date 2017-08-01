@@ -13,7 +13,12 @@ L.Control.EasyPrint = L.Control.extend({
     hideControlContainer: true,
     customWindowTitle: window.document.title,
     spinnerBgCOlor: '#0DC5C1',
-    customSpinnerClass: 'epLoader'
+    customSpinnerClass: 'epLoader',
+    defaultSizeTitles: {
+      Current: 'Current Size',
+      A4Landscape: 'A4 Landscape',
+      A4Portrait: 'A4 Portrait'
+    }
   },
 
   onAdd: function () { 
@@ -21,23 +26,23 @@ L.Control.EasyPrint = L.Control.extend({
     this.options.sizeModes = this.options.sizeModes.map(function (sizeMode) {
       if (sizeMode === 'Current') {
         return {
-          name: 'Current Size',
+          name: this.options.defaultSizeTitles.Current,
           className: 'CurrentSize'
         }
       }
       if (sizeMode === 'A4Landscape') {
         return {
-          height: _a4PageSize.height,
-          width: _a4PageSize.width,
-          name: 'A4 Landscape',
+          height: this._a4PageSize.height,
+          width: this._a4PageSize.width,
+          name: this.options.defaultSizeTitles.A4Landscape,
           className: 'A4Landscape page'
         }
       }
       if (sizeMode === 'A4Portrait') {
         return {
-          height: _a4PageSize.width,
-          width: _a4PageSize.height,
-          name: 'A4 Portrait',
+          height: this._a4PageSize.width,
+          width: this._a4PageSize.height,
+          name: this.options.defaultSizeTitles.A4Portrait,
           className: 'A4Portrait page'
         }
       };
@@ -387,6 +392,11 @@ L.Control.EasyPrint = L.Control.extend({
     var controlContainer = document.getElementsByClassName("leaflet-control-container")[0];
     if (show) return controlContainer.style.display = 'block';
     controlContainer.style.display = 'none';
+  },
+
+  _a4PageSize: {
+    height: 715,
+    width: 1045
   }
 
 });
@@ -395,7 +405,3 @@ L.easyPrint = function(options) {
   return new L.Control.EasyPrint(options);
 };
 
-var _a4PageSize = {
-  height: 715,
-  width: 1045
-};

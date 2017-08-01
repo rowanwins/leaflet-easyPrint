@@ -23,6 +23,7 @@ You can pass a number of options to the plugin to control various settings.
 | title | string | 'Print map' | Sets the text which appears as the tooltip of the print/export button |
 | position | [Leaflet control position](http://leafletjs.com/reference-1.1.0.html#controls) | 'topleft' | Positions the print button |
 | sizeModes | array | `Current` | Options available include `Current`, `A4Portrait`, `A4Landscape` or a [custom size object](#custom-print-sizes) |
+| defaultSizeTitles | object | `{Current: 'Current Size', A4Landscape: 'A4 Landscape', A4Portrait: 'A4 Portrait'}`| button tooltips for the default page sizes |
 | exportOnly | Boolean | `false` | If set to `true` the map is exported to a png file |
 | tileLayer | [Leaflet control position](http://leafletjs.com/reference-1.1.0.html#tilelayer) | `null` | A tile layer that you can wait for to draw (helpful when resizing) |
 | tileWait | Integer | 500 | How long to wait for the tiles to draw (helpful when resizing) |
@@ -45,7 +46,7 @@ L.easyPrint({
 ### Methods / Using programmatically
 | Method        | Options      | Description   |
 | --------------|--------------|--------------|
-| printMap(size, filename) | Print size name, either 'CurrentSize', 'A4Portait', 'A4Landscape', or the `className` of a custom size. And a filename. | Manually trigger a print operation |
+| printMap(size, filename) | Print size name, either 'CurrentSize', 'A4Portait', 'A4Landscape', or the `className` of a custom size. And a filename | Manually trigger a print operation |
 ````
 var printPlugin = L.easyPrint({
 	hidden: true,
