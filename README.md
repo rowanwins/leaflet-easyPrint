@@ -5,7 +5,8 @@ A simple [leaflet](http://www.leafletjs.com) plugin which adds an icon to print 
 * Supports resizing to prefined sizes (A4 Landscape & Portait) as well as custom sizes
 * Supports saving to png, as well as printing
 * Compatible with both Leaflet v1+ and 0.7
-* Tested on Chrome, Firefox, IE & Edge
+* Tested on Chrome, Firefox
+  * Incompatible with IE & Edge due to `dom-to-image` dependency
 
 Check out the [demo](http://rowanwins.github.com/leaflet-easyPrint/).
 
