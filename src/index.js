@@ -48,10 +48,10 @@ L.Control.EasyPrint = L.Control.extend({
       };
       return sizeMode;
     }, this);
-
+    
+    var container = L.DomUtil.create('div', 'leaflet-control-easyPrint leaflet-bar leaflet-control');
     if (!this.options.hidden) {
       this._addCss();
-      var container = L.DomUtil.create('div', 'leaflet-control-easyPrint leaflet-bar leaflet-control');
 
       L.DomEvent.addListener(container, 'mouseover', this._togglePageSizeButtons, this);
       L.DomEvent.addListener(container, 'mouseout', this._togglePageSizeButtons, this);
@@ -72,9 +72,8 @@ L.Control.EasyPrint = L.Control.extend({
       }, this);
 
       L.DomEvent.disableClickPropagation(container);
-
-      return container;      
     }
+    return container;
   },
 
   printMap: function (event, filename) {
@@ -92,7 +91,9 @@ L.Control.EasyPrint = L.Control.extend({
       center: this._map.getCenter()
     };
     this._map.fire("easyPrint-start", { event: event });
-    this._togglePageSizeButtons({type: null});
+    if (!this.options.hidden) {
+      this._togglePageSizeButtons({type: null});
+    }
     if (this.options.hideControlContainer) {
       this._toggleControls();    
     }
@@ -171,7 +172,9 @@ L.Control.EasyPrint = L.Control.extend({
           } else {
             plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
           }
-          plugin._toggleControls(true);
+          if (!plugin.options.hidden) {
+            plugin._toggleControls(true);
+          }
 
           if (plugin.outerContainer) {
             plugin.mapContainer.style.width = plugin.originalState.mapWidth;
