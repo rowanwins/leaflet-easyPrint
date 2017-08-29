@@ -172,9 +172,7 @@ L.Control.EasyPrint = L.Control.extend({
           } else {
             plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
           }
-          if (!plugin.options.hidden) {
-            plugin._toggleControls(true);
-          }
+          plugin._toggleControls(true);
 
           if (plugin.outerContainer) {
             plugin.mapContainer.style.width = plugin.originalState.mapWidth;
