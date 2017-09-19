@@ -7,19 +7,11 @@
     "type": "git",
     "url": "git+https://github.com/rowanwins/leaflet-easyPrint.git"
   },
-  "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w", 
-    "prepublish": "npm run build"
-  },
   "keywords": [
     "leaflet"
   ],
   "author": "Rowan Winsemius <rowanwins@yahoo.com.au>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/rowanwins/leaflet-easyPrint/issues"
-  },
   "homepage": "https://github.com/rowanwins/leaflet-easyPrint#readme",
   "dependencies": {
     "dom-to-image": "^2.5.2",
