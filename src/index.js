@@ -86,10 +86,20 @@ L.Control.EasyPrint = L.Control.extend({
     }
     this.originalState = {
       mapWidth: this.mapContainer.style.width,
+      widthWasAuto: false,
+      widthWasPercentage: false,
       mapHeight: this.mapContainer.style.height,
       zoom: this._map.getZoom(),
       center: this._map.getCenter()
     };
+    if (this.originalState.mapWidth === 'auto') {
+      this.originalState.mapWidth = this._map.getSize().x  + 'px'
+      this.originalState.widthWasAuto = true
+    } else if (this.originalState.mapWidth.includes('%')) {
+      this.originalState.percentageWidth = this.originalState.mapWidth
+      this.originalState.widthWasPercentage = true
+      this.originalState.mapWidth = this._map.getSize().x  + 'px'
+    }
     this._map.fire("easyPrint-start", { event: event });
     if (!this.options.hidden) {
       this._togglePageSizeButtons({type: null});
@@ -99,15 +109,21 @@ L.Control.EasyPrint = L.Control.extend({
     }
     var sizeMode = typeof event !== 'string' ? event.target.className : event;
     if (sizeMode === 'CurrentSize') {
-      return this._printOpertion();
+      return this._printOpertion(sizeMode);
     }
     this.outerContainer = this._createOuterContainer(this.mapContainer)
+    if (this.originalState.widthWasAuto) {
+      this.outerContainer.style.width = this.originalState.mapWidth
+    }
     this._createImagePlaceholder(sizeMode)
   },
 
-  _createImagePlaceholder: function (printSize) {
+  _createImagePlaceholder: function (sizeMode) {
     var plugin = this;
-    domtoimage.toPng(this.mapContainer)
+    domtoimage.toPng(this.mapContainer, {
+        width: parseInt(this.originalState.mapWidth.replace('px')),
+        height: parseInt(this.originalState.mapHeight.replace('px'))
+      })
       .then(function (dataUrl) {
         plugin.blankDiv = document.createElement("div");
         var blankDiv = plugin.blankDiv;
@@ -117,19 +133,19 @@ L.Control.EasyPrint = L.Control.extend({
         blankDiv.style.position = 'absolute';
         blankDiv.style.zIndex = 1011;
         blankDiv.style.display = 'initial';
-        blankDiv.style.width = plugin.mapContainer.style.width;
-        blankDiv.style.height = plugin.mapContainer.style.height;
-        plugin._resizeAndPrintMap(printSize);
+        blankDiv.style.width = plugin.originalState.mapWidth;
+        blankDiv.style.height = plugin.originalState.mapHeight;
+        plugin._resizeAndPrintMap(sizeMode);
       })
       .catch(function (error) {
           console.error('oops, something went wrong!', error);
       });
   },
 
-  _resizeAndPrintMap: function (printSize) {
+  _resizeAndPrintMap: function (sizeMode) {
     this.outerContainer.style.opacity = 0;
     var pageSize = this.options.sizeModes.filter(function (item) {
-      return item.className === printSize
+      return item.className === sizeMode
     });
     pageSize = pageSize[0]
     this.mapContainer.style.width = pageSize.width + 'px';
@@ -143,26 +159,30 @@ L.Control.EasyPrint = L.Control.extend({
     this._map.setZoom(this.originalState.zoom);
     this._map.invalidateSize();
     if (this.options.tileLayer) {
-      this._pausePrint()
+      this._pausePrint(sizeMode)
     } else {
-      this._printOpertion()
+      this._printOpertion(sizeMode)
     }
   },
 
-  _pausePrint: function () {
+  _pausePrint: function (sizeMode) {
     var plugin = this
     var loadingTest = setInterval(function () { 
       if(!plugin.options.tileLayer.isLoading()) {
         clearInterval(loadingTest);
-        plugin._printOpertion()
+        plugin._printOpertion(sizeMode)
       }
     }, plugin.options.tileWait);
   },
 
-  _printOpertion: function () {
+  _printOpertion: function (sizemode) {
     var plugin = this;
+    var widthForExport = this.mapContainer.style.width
+    if (this.originalState.widthWasAuto && sizemode === 'CurrentSize' || this.originalState.widthWasPercentage && sizemode === 'CurrentSize') {
+      widthForExport = this.originalState.mapWidth
+    }
     domtoimage.toPng(plugin.mapContainer, {
-        width: parseInt(plugin.mapContainer.style.width.replace('px')),
+        width: parseInt(widthForExport),
         height: parseInt(plugin.mapContainer.style.height.replace('px'))
       })
       .then(function (dataUrl) {
@@ -175,7 +195,14 @@ L.Control.EasyPrint = L.Control.extend({
           plugin._toggleControls(true);
 
           if (plugin.outerContainer) {
-            plugin.mapContainer.style.width = plugin.originalState.mapWidth;
+            if (plugin.originalState.widthWasAuto) {
+              plugin.mapContainer.style.width = 'auto'
+            } else if (plugin.originalState.widthWasPercentage) {
+              plugin.mapContainer.style.width = plugin.originalState.percentageWidth
+            }
+            else {
+              plugin.mapContainer.style.width = plugin.originalState.mapWidth;              
+            }
             plugin.mapContainer.style.height = plugin.originalState.mapHeight;
             plugin._removeOuterContainer(plugin.mapContainer, plugin.outerContainer, plugin.blankDiv)
             plugin._map.invalidateSize();
