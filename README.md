@@ -30,6 +30,7 @@ You can pass a number of options to the plugin to control various settings.
 | tileWait | Integer | 500 | How long to wait for the tiles to draw (helpful when resizing) |
 | filename | string | 'map' | Name of the file if export only option set to true |
 | hidden | Boolean | false | Set to true if you don't want to display the toolbar. Instead you can create your own buttons or fire print events programtically. You still need to call `addTo(map)` to set the leaflet map context. |
+| hideControlContainer | Boolean | true | Hides the leaflet controls like the zoom buttons and the attribution on the print out. |
 | customWindowTitle | string | Defaults to title of map window. | A title for the print window which will get added the printed paper. |
 | spinnerBgColor | string | '#0DC5C1' | A valid css colour for the spinner background color. |
 | customSpinnerClass | string | 'epLoader' | A class for a custom css spinner to use while waiting for the print. |
