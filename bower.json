@@ -1,0 +1,24 @@
+{
+  "name": "leaflet-easyprint",
+  "description": "A leaflet plugin which adds an icon to print the map",
+  "main": "dist/bundle.js",
+  "repository": {
+    "type": "git",
+    "url": "githttps://github.com/rowanwins/leaflet-easyPrint.git"
+  },
+  "keywords": [
+    "leaflet"
+  ],
+  "ignore": [
+    ".*",
+    "CHANGELOG.json",
+    "src"
+  ],
+  "author": "Rowan Winsemius <rowanwins@yahoo.com.au>",
+  "license": "MIT",
+  "homepage": "https://github.com/rowanwins/leaflet-easyPrint#readme",
+  "dependencies": {
+    "dom-to-image": "^2.5.2",
+    "file-saver": "^1.3.3"
+  }
+}
