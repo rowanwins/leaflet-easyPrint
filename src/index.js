@@ -11,6 +11,7 @@ L.Control.EasyPrint = L.Control.extend({
     hidden: false,
     tileWait: 500,
     hideControlContainer: true,
+    hideClasses: '',
     customWindowTitle: window.document.title,
     spinnerBgCOlor: '#0DC5C1',
     customSpinnerClass: 'epLoader',
@@ -107,6 +108,9 @@ L.Control.EasyPrint = L.Control.extend({
     if (this.options.hideControlContainer) {
       this._toggleControls();    
     }
+    if (this.options.hideClasses) {
+      this._toggleClasses(this.options.hideClasses);
+    }
     var sizeMode = typeof event !== 'string' ? event.target.className : event;
     if (sizeMode === 'CurrentSize') {
       return this._printOpertion(sizeMode);
@@ -193,6 +197,7 @@ L.Control.EasyPrint = L.Control.extend({
             plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
           }
           plugin._toggleControls(true);
+          plugin._toggleClasses(plugin.options.hideClasses, true);
 
           if (plugin.outerContainer) {
             if (plugin.originalState.widthWasAuto) {
@@ -420,6 +425,16 @@ L.Control.EasyPrint = L.Control.extend({
     var controlContainer = document.getElementsByClassName("leaflet-control-container")[0];
     if (show) return controlContainer.style.display = 'block';
     controlContainer.style.display = 'none';
+  },
+  _toggleClasses: function (classesStr, show = false) {
+    var classesNames = classesStr.split(',');
+    if ('' == classesNames) return;
+
+    classesNames.forEach(function (className) {
+      var div = document.getElementsByClassName(className)[0];
+      if (show) return div.style.display = 'block';
+      div.style.display = 'none';
+    });
   },
 
   _a4PageSize: {
