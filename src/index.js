@@ -11,7 +11,7 @@ L.Control.EasyPrint = L.Control.extend({
     hidden: false,
     tileWait: 500,
     hideControlContainer: true,
-    hideClasses: '',
+    hideClasses: [],
     customWindowTitle: window.document.title,
     spinnerBgCOlor: '#0DC5C1',
     customSpinnerClass: 'epLoader',
@@ -426,11 +426,8 @@ L.Control.EasyPrint = L.Control.extend({
     if (show) return controlContainer.style.display = 'block';
     controlContainer.style.display = 'none';
   },
-  _toggleClasses: function (classesStr, show = false) {
-    var classesNames = classesStr.split(',');
-    if ('' == classesNames) return;
-
-    classesNames.forEach(function (className) {
+  _toggleClasses: function (classes, show) {
+    classes.forEach(function (className) {
       var div = document.getElementsByClassName(className)[0];
       if (show) return div.style.display = 'block';
       div.style.display = 'none';
