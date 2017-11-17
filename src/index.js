@@ -149,7 +149,7 @@ L.Control.EasyPrint = L.Control.extend({
   _resizeAndPrintMap: function (sizeMode) {
     this.outerContainer.style.opacity = 0;
     var pageSize = this.options.sizeModes.filter(function (item) {
-      return item.className === sizeMode
+      return item.className.indexOf(sizeMode) > -1;
     });
     pageSize = pageSize[0]
     this.mapContainer.style.width = pageSize.width + 'px';
