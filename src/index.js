@@ -7,7 +7,7 @@ L.Control.EasyPrint = L.Control.extend({
     position: 'topleft',
     sizeModes: ['Current'],
     filename: 'map',
-    exportOnly: false,
+    outputMode: 'print',
     hidden: false,
     tileWait: 500,
     hideControlContainer: true,
@@ -191,9 +191,9 @@ L.Control.EasyPrint = L.Control.extend({
       })
       .then(function (dataUrl) {
           var blob = plugin._dataURItoBlob(dataUrl);
-          if (plugin.options.exportOnly) {
+          if (plugin.options.outputMode === 'download') {
             fileSaver.saveAs(blob, plugin.options.filename + '.png');
-          } else {
+          } else if (plugin.options.outputMode === 'print') {
             plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
           }
           plugin._toggleControls(true);
