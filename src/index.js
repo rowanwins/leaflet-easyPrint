@@ -214,7 +214,11 @@ L.Control.EasyPrint = L.Control.extend({
             plugin._map.setView(plugin.originalState.center);
             plugin._map.setZoom(plugin.originalState.zoom);
           }
-          plugin._map.fire("easyPrint-finished");
+          if (plugin.options.outputMode === 'event') {
+            plugin._map.fire("easyPrint-finished", {event: blob});
+          } else {
+            plugin._map.fire("easyPrint-finished");
+          }
       })
       .catch(function (error) {
           console.error('Print operation failed', error);
