@@ -58,7 +58,7 @@ L.Control.EasyPrint = L.Control.extend({
       L.DomEvent.addListener(container, 'mouseout', this._togglePageSizeButtons, this);
 
       var btnClass = 'leaflet-control-easyPrint-button'
-      if (this.options.exportOnly) btnClass = btnClass + '-export'
+      if (this.options.outputMode === 'download') btnClass = btnClass + '-export'
 
       this.link = L.DomUtil.create('a', btnClass, container);
       this.link.id = "leafletEasyPrint";
@@ -81,7 +81,7 @@ L.Control.EasyPrint = L.Control.extend({
     if (filename) {
       this.options.filename = filename
     }
-    if (!this.options.exportOnly) {
+    if (this.options.outputMode === 'print') {
       this._page = window.open("", "_blank", 'toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10, top=10, width=200, height=250, visible=none');
       this._page.document.write(this._createSpinner(this.options.customWindowTitle, this.options.customSpinnerClass, this.options.spinnerBgCOlor));
     }
