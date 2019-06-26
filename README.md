@@ -1,5 +1,7 @@
 ## leaflet-easyPrint
-A simple [leaflet](http://www.leafletjs.com) plugin which adds an icon to print or export a map. 
+A simple [leaflet](http://www.leafletjs.com) plugin which adds an icon to print or export a map.
+
+This fork of [rowanwins/leaflet-easyPrint](https://github.com/rowanwins/leaflet-easyPrint) concentrates on the mapbounds and the dpi to export.
 
 ## Features
 * Supports resizing to predefined sizes (A4 Landscape & Portrait) as well as custom sizes
@@ -35,47 +37,20 @@ You can pass a number of options to the plugin to control various settings.
 | customWindowTitle | string | Defaults to title of map window. | A title for the print window which will get added the printed paper. |
 | spinnerBgColor | string | '#0DC5C1' | A valid css colour for the spinner background color. |
 | customSpinnerClass | string | 'epLoader' | A class for a custom css spinner to use while waiting for the print. |
+| dpi | Integer | 300 | This value is for calculating the correct export pixel resolution  |
 
 
 ### Example
 ````
 L.easyPrint({
-	title: 'My awesome print button',
-	position: 'bottomright',
-	sizeModes: ['A4Portrait', 'A4Landscape']
+    dpi: 600,
+    [...]
 }).addTo(map);
 ````
 
-### Methods / Using programmatically
-| Method        | Options      | Description   |
-| --------------|--------------|--------------|
-| printMap(size, filename) | Print size name, either 'CurrentSize', 'A4Portrait', 'A4Landscape', or the `className` of a custom size. And a filename | Manually trigger a print operation |
-````
-var printPlugin = L.easyPrint({
-	hidden: true,
-	sizeModes: ['A4Portrait']
-}).addTo(map); 
-printPlugin.printMap('A4Portrait', 'MyFileName');
-````
-
-
-### Custom Print Sizes
-You can create additional print sizes by passing in some options. Width & Height are defined in pixels at 90DPI. THe css class ought to contain a background base64 encoded svg image.
-````
-var a3Size = {
-	width: 2339,
-	height: 3308,
-	className: 'a3CssClass',
-	tooltip: 'A custom A3 size'
-}
-
-// in css 
-.easyPrintHolder .a3CssClass { 
-  background-image: url(data:image/svg+xml;utf8;base64,PD9...go=);
-}
-````
-
 ### Acknowledgements
+Many thanks to Rowan Winsemius for [rowanwins/leaflet-easyPrint](https://github.com/rowanwins/leaflet-easyPrint)!
+
 Huge hats off go to [mourner](https://github.com/mourner) and all the [contributors](https://github.com/Leaflet/Leaflet/graphs/contributors) to the leaflet.js project, it's an amazing piece of open source software!
 
 Also uses [dom-to-image](https://github.com/tsayen/dom-to-image) and [FileSaver](https://github.com/eligrey/FileSaver.js) under the hood.
