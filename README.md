@@ -1,4 +1,4 @@
-## leaflet-easyPrint
+## leaflet-easyprint-bbox
 A simple [leaflet](http://www.leafletjs.com) plugin which adds an icon to print or export a map.
 
 This fork of [rowanwins/leaflet-easyPrint](https://github.com/rowanwins/leaflet-easyPrint) concentrates on the mapbounds and the dpi to export.
@@ -15,7 +15,7 @@ Check out the [demo](http://rowanwins.github.com/leaflet-easyPrint/).
 ### Download
 You can either download this repo directly or install via NPM.
 ````
-npm install leaflet-easyprint
+npm install leaflet-easyprint-bbox
 ````
 
 ### Options
