@@ -1,6 +1,6 @@
 {
-  "name": "leaflet-easyprint",
-  "version": "2.1.8",
+  "name": "leaflet-easyprint-bbox",
+  "version": "0.0.5",
   "description": "A leaflet plugin which adds an icon to print the map",
   "main": "dist/bundle.js",
   "repository": {
