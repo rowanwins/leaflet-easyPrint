@@ -56,7 +56,7 @@ L.Control.EasyPrint = L.Control.extend({
 
       L.DomEvent.addListener(container, 'mouseover', this._togglePageSizeButtons, this);
       L.DomEvent.addListener(container, 'mouseout', this._togglePageSizeButtons, this);
-      L.DomEvent.on(t,"click", function (ev) {L.DomEvent.stopPropagation (ev)});
+      L.DomEvent.on(container, "click", function (ev) {L.DomEvent.stopPropagation (ev)});
       
       var btnClass = 'leaflet-control-easyPrint-button'
       if (this.options.exportOnly) btnClass = btnClass + '-export'
