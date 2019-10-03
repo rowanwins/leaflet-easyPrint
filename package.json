@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w", 
+    "dev": "rollup -c -w",
     "prepublish": "npm run build"
   },
   "keywords": [
