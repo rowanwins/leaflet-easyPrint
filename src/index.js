@@ -213,8 +213,20 @@ L.Control.EasyPrint = L.Control.extend({
             plugin._map.invalidateSize();
             plugin._map.setView(plugin.originalState.center);
             plugin._map.setZoom(plugin.originalState.zoom);
+            if (plugin.options.tileLayer) {
+              return new Promise(function(resolve, reject) {
+                var loadingTest = setInterval(function () { 
+                  if(!plugin.options.tileLayer.isLoading()) {
+                    clearInterval(loadingTest);
+                    resolve();
+                  }
+                }, plugin.options.tileWait);
+              });
+            }
           }
-          plugin._map.fire("easyPrint-finished");
+      })
+      .then(function () {
+        plugin._map.fire("easyPrint-finished");
       })
       .catch(function (error) {
           console.error('Print operation failed', error);
