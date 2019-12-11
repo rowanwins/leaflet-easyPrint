@@ -1,5 +1,6 @@
 var domtoimage = require('dom-to-image');
 var fileSaver = require('file-saver');
+var jsPDF = require('jspdf');
 
 L.Control.EasyPrint = L.Control.extend({
   options: {
@@ -190,9 +191,10 @@ L.Control.EasyPrint = L.Control.extend({
         height: parseInt(plugin.mapContainer.style.height.replace('px'))
       })
       .then(function (dataUrl) {
-          var blob = plugin._dataURItoBlob(dataUrl);
+          var doc = new jsPDF();
+          doc.addImage(dataUrl,'PNG', 20, 20);  
           if (plugin.options.exportOnly) {
-            fileSaver.saveAs(blob, plugin.options.filename + '.png');
+			doc.save(plugin.options.filename + '.pdf');
           } else {
             plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
           }
