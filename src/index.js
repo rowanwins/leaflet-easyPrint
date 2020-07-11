@@ -7,7 +7,7 @@ L.Control.EasyPrint = L.Control.extend({
     position: 'topleft',
     sizeModes: ['Current'],
     filename: 'map',
-    outputMode: 'print',
+    outputMode: 'event',
     hidden: false,
     tileWait: 500,
     hideControlContainer: true,
@@ -81,10 +81,10 @@ L.Control.EasyPrint = L.Control.extend({
     if (filename) {
       this.options.filename = filename
     }
-    if (this.options.outputMode === 'print') {
-      this._page = window.open("", "_blank", 'toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10, top=10, width=200, height=250, visible=none');
-      this._page.document.write(this._createSpinner(this.options.customWindowTitle, this.options.customSpinnerClass, this.options.spinnerBgCOlor));
-    }
+    //if (this.options.outputMode === 'print') {
+    //  this._page = window.open("", "_blank", 'toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10, top=10, width=200, height=250, visible=none');
+    //  this._page.document.write(this._createSpinner(this.options.customWindowTitle, this.options.customSpinnerClass, this.options.spinnerBgCOlor));
+    //}
     this.originalState = {
       mapWidth: this.mapContainer.style.width,
       widthWasAuto: false,
@@ -191,11 +191,11 @@ L.Control.EasyPrint = L.Control.extend({
       })
       .then(function (dataUrl) {
           var blob = plugin._dataURItoBlob(dataUrl);
-          if (plugin.options.outputMode === 'download') {
-            fileSaver.saveAs(blob, plugin.options.filename + '.png');
-          } else if (plugin.options.outputMode === 'print') {
-            plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
-          }
+          //if (plugin.options.outputMode === 'download') {
+          //  fileSaver.saveAs(blob, plugin.options.filename + '.png');
+          //} else if (plugin.options.outputMode === 'print') {
+          //  plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
+          //}
           plugin._toggleControls(true);
           plugin._toggleClasses(plugin.options.hideClasses, true);
 
