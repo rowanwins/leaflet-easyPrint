@@ -7,8 +7,8 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-	<link href='http://fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	
 	<style>
 		html {background: #222222; padding: 40px 200px;font-family: 'Lato', sans-serif;}
@@ -57,7 +57,7 @@
 
 		var map = L.map('map').setView([51.505, -0.09], 13);
 
-		var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}.png', {
+		var tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}.png', {
 			maxZoom: 18,
 			attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
 		}).addTo(map);
