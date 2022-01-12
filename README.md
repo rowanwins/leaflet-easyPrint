@@ -25,10 +25,10 @@ You can pass a number of options to the plugin to control various settings.
 | position | [Leaflet control position](http://leafletjs.com/reference-1.1.0.html#controls) | 'topleft' | Positions the print button |
 | sizeModes | array | `Current` | Options available include `Current`, `A4Portrait`, `A4Landscape` or a [custom size object](#custom-print-sizes) |
 | defaultSizeTitles | object | `{Current: 'Current Size', A4Landscape: 'A4 Landscape', A4Portrait: 'A4 Portrait'}`| button tooltips for the default page sizes |
-| exportOnly | Boolean | `false` | If set to `true` the map is exported to a png file |
+| outputMode | string | 'print' | Options available include `print`, `download` (download image as png), `event` (get image as blob in event) |
 | tileLayer | [Leaflet tile layer](http://leafletjs.com/reference-1.1.0.html#tilelayer) | `null` | A tile layer that you can wait for to draw (helpful when resizing) |
 | tileWait | Integer | 500 | How long to wait for the tiles to draw (helpful when resizing) |
-| filename | string | 'map' | Name of the file if export only option set to true |
+| filename | string | 'map' | Name of the file if output mode option set to 'download' |
 | hidden | Boolean | false | Set to true if you don't want to display the toolbar. Instead you can create your own buttons or fire print events programmatically. You still need to call `addTo(map)` to set the leaflet map context. |
 | hideControlContainer | Boolean | true | Hides the leaflet controls like the zoom buttons and the attribution on the print out. |
 | hideClasses | array | [] | Hides classes on the print out. Use an array of strings as follow : ['div1', 'div2'] |

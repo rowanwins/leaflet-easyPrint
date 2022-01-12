@@ -7,7 +7,7 @@ L.Control.EasyPrint = L.Control.extend({
     position: 'topleft',
     sizeModes: ['Current'],
     filename: 'map',
-    exportOnly: false,
+    outputMode: 'print',
     hidden: false,
     tileWait: 500,
     hideControlContainer: true,
@@ -58,7 +58,7 @@ L.Control.EasyPrint = L.Control.extend({
       L.DomEvent.addListener(container, 'mouseout', this._togglePageSizeButtons, this);
 
       var btnClass = 'leaflet-control-easyPrint-button'
-      if (this.options.exportOnly) btnClass = btnClass + '-export'
+      if (this.options.outputMode === 'download') btnClass = btnClass + '-export'
 
       this.link = L.DomUtil.create('a', btnClass, container);
       this.link.id = "leafletEasyPrint";
@@ -81,7 +81,7 @@ L.Control.EasyPrint = L.Control.extend({
     if (filename) {
       this.options.filename = filename
     }
-    if (!this.options.exportOnly) {
+    if (this.options.outputMode === 'print') {
       this._page = window.open("", "_blank", 'toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10, top=10, width=200, height=250, visible=none');
       this._page.document.write(this._createSpinner(this.options.customWindowTitle, this.options.customSpinnerClass, this.options.spinnerBgCOlor));
     }
@@ -191,9 +191,9 @@ L.Control.EasyPrint = L.Control.extend({
       })
       .then(function (dataUrl) {
           var blob = plugin._dataURItoBlob(dataUrl);
-          if (plugin.options.exportOnly) {
+          if (plugin.options.outputMode === 'download') {
             fileSaver.saveAs(blob, plugin.options.filename + '.png');
-          } else {
+          } else if (plugin.options.outputMode === 'print') {
             plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
           }
           plugin._toggleControls(true);
@@ -214,7 +214,11 @@ L.Control.EasyPrint = L.Control.extend({
             plugin._map.setView(plugin.originalState.center);
             plugin._map.setZoom(plugin.originalState.zoom);
           }
-          plugin._map.fire("easyPrint-finished");
+          if (plugin.options.outputMode === 'event') {
+            plugin._map.fire("easyPrint-finished", {event: blob});
+          } else {
+            plugin._map.fire("easyPrint-finished");
+          }
       })
       .catch(function (error) {
           console.error('Print operation failed', error);
