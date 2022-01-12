@@ -8,7 +8,7 @@ A simple [leaflet](http://www.leafletjs.com) plugin which adds an icon to print 
 * Tested on Chrome, Firefox
   * Incompatible with IE & Edge due to `dom-to-image` dependency
 
-Check out the [demo](http://rowanwins.github.com/leaflet-easyPrint/).
+Check out the [demo](http://rowanwins.github.io/leaflet-easyPrint/).
 
 ### Download
 You can either download this repo directly or install via NPM.
