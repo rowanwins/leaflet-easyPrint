@@ -22,7 +22,7 @@ L.Control.EasyPrint = L.Control.extend({
     }
   },
 
-  onAdd: function () { 
+  onAdd: function () {
     this.mapContainer = this._map.getContainer();
     this.options.sizeModes = this.options.sizeModes.map(function (sizeMode) {
       if (sizeMode === 'Current') {
@@ -49,7 +49,7 @@ L.Control.EasyPrint = L.Control.extend({
       };
       return sizeMode;
     }, this);
-    
+
     var container = L.DomUtil.create('div', 'leaflet-control-easyPrint leaflet-bar leaflet-control');
     if (!this.options.hidden) {
       this._addCss();
@@ -106,7 +106,7 @@ L.Control.EasyPrint = L.Control.extend({
       this._togglePageSizeButtons({type: null});
     }
     if (this.options.hideControlContainer) {
-      this._toggleControls();    
+      this._toggleControls();
     }
     if (this.options.hideClasses) {
       this._toggleClasses(this.options.hideClasses);
@@ -171,7 +171,7 @@ L.Control.EasyPrint = L.Control.extend({
 
   _pausePrint: function (sizeMode) {
     var plugin = this
-    var loadingTest = setInterval(function () { 
+    var loadingTest = setInterval(function () {
       if(!plugin.options.tileLayer.isLoading()) {
         clearInterval(loadingTest);
         plugin._printOpertion(sizeMode)
@@ -185,6 +185,29 @@ L.Control.EasyPrint = L.Control.extend({
     if (this.originalState.widthWasAuto && sizemode === 'CurrentSize' || this.originalState.widthWasPercentage && sizemode === 'CurrentSize') {
       widthForExport = this.originalState.mapWidth
     }
+
+    function restorePlugin(plugin) {
+        plugin._toggleControls(true);
+        plugin._toggleClasses(plugin.options.hideClasses, true);
+
+        if (plugin.outerContainer) {
+            if (plugin.originalState.widthWasAuto) {
+                plugin.mapContainer.style.width = 'auto'
+            } else if (plugin.originalState.widthWasPercentage) {
+                plugin.mapContainer.style.width = plugin.originalState.percentageWidth
+            }
+            else {
+                plugin.mapContainer.style.width = plugin.originalState.mapWidth;
+            }
+            plugin.mapContainer.style.height = plugin.originalState.mapHeight;
+            plugin._removeOuterContainer(plugin.mapContainer, plugin.outerContainer, plugin.blankDiv)
+            plugin._map.invalidateSize();
+            plugin._map.setView(plugin.originalState.center);
+            plugin._map.setZoom(plugin.originalState.zoom);
+        }
+
+    }
+
     domtoimage.toPng(plugin.mapContainer, {
         width: parseInt(widthForExport),
         height: parseInt(plugin.mapContainer.style.height.replace('px'))
@@ -196,37 +219,21 @@ L.Control.EasyPrint = L.Control.extend({
           } else {
             plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
           }
-          plugin._toggleControls(true);
-          plugin._toggleClasses(plugin.options.hideClasses, true);
-
-          if (plugin.outerContainer) {
-            if (plugin.originalState.widthWasAuto) {
-              plugin.mapContainer.style.width = 'auto'
-            } else if (plugin.originalState.widthWasPercentage) {
-              plugin.mapContainer.style.width = plugin.originalState.percentageWidth
-            }
-            else {
-              plugin.mapContainer.style.width = plugin.originalState.mapWidth;              
-            }
-            plugin.mapContainer.style.height = plugin.originalState.mapHeight;
-            plugin._removeOuterContainer(plugin.mapContainer, plugin.outerContainer, plugin.blankDiv)
-            plugin._map.invalidateSize();
-            plugin._map.setView(plugin.originalState.center);
-            plugin._map.setZoom(plugin.originalState.zoom);
-          }
+          restorePlugin(plugin)
           plugin._map.fire("easyPrint-finished");
       })
       .catch(function (error) {
           console.error('Print operation failed', error);
-      }); 
+          restorePlugin(plugin);
+      });
   },
 
   _sendToBrowserPrint: function (img, orientation) {
-    this._page.resizeTo(600, 800); 
+    this._page.resizeTo(600, 800);
     var pageContent = this._createNewWindow(img, orientation, this)
     this._page.document.body.innerHTML = ''
     this._page.document.write(pageContent);
-    this._page.document.close();  
+    this._page.document.close();
   },
 
   _createSpinner: function (title, spinnerClass, spinnerColor) {
@@ -319,8 +326,8 @@ L.Control.EasyPrint = L.Control.extend({
   },
 
   _createOuterContainer: function (mapDiv) {
-    var outerContainer = document.createElement('div'); 
-    mapDiv.parentNode.insertBefore(outerContainer, mapDiv); 
+    var outerContainer = document.createElement('div');
+    mapDiv.parentNode.insertBefore(outerContainer, mapDiv);
     mapDiv.parentNode.removeChild(mapDiv);
     outerContainer.appendChild(mapDiv);
     outerContainer.style.width = mapDiv.style.width;
@@ -334,22 +341,22 @@ L.Control.EasyPrint = L.Control.extend({
     if (outerContainer.parentNode) {
       outerContainer.parentNode.insertBefore(mapDiv, outerContainer);
       outerContainer.parentNode.removeChild(blankDiv);
-      outerContainer.parentNode.removeChild(outerContainer);      
+      outerContainer.parentNode.removeChild(outerContainer);
     }
   },
 
   _addCss: function () {
     var css = document.createElement("style");
     css.type = "text/css";
-    css.innerHTML = `.leaflet-control-easyPrint-button { 
+    css.innerHTML = `.leaflet-control-easyPrint-button {
       background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cGF0aCBkPSJNMTI4LDMyaDI1NnY2NEgxMjhWMzJ6IE00ODAsMTI4SDMyYy0xNy42LDAtMzIsMTQuNC0zMiwzMnYxNjBjMCwxNy42LDE0LjM5OCwzMiwzMiwzMmg5NnYxMjhoMjU2VjM1Mmg5NiAgIGMxNy42LDAsMzItMTQuNCwzMi0zMlYxNjBDNTEyLDE0Mi40LDQ5Ny42LDEyOCw0ODAsMTI4eiBNMzUyLDQ0OEgxNjBWMjg4aDE5MlY0NDh6IE00ODcuMTk5LDE3NmMwLDEyLjgxMy0xMC4zODcsMjMuMi0yMy4xOTcsMjMuMiAgIGMtMTIuODEyLDAtMjMuMjAxLTEwLjM4Ny0yMy4yMDEtMjMuMnMxMC4zODktMjMuMiwyMy4xOTktMjMuMkM0NzYuODE0LDE1Mi44LDQ4Ny4xOTksMTYzLjE4Nyw0ODcuMTk5LDE3NnoiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
-      background-size: 16px 16px; 
-      cursor: pointer; 
+      background-size: 16px 16px;
+      cursor: pointer;
     }
-    .leaflet-control-easyPrint-button-export { 
+    .leaflet-control-easyPrint-button-export {
       background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDQzMy41IDQzMy41IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MzMuNSA0MzMuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxnIGlkPSJmaWxlLWRvd25sb2FkIj4KCQk8cGF0aCBkPSJNMzk1LjI1LDE1M2gtMTAyVjBoLTE1M3YxNTNoLTEwMmwxNzguNSwxNzguNUwzOTUuMjUsMTUzeiBNMzguMjUsMzgyLjV2NTFoMzU3di01MUgzOC4yNXoiIGZpbGw9IiMwMDAwMDAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
-      background-size: 16px 16px; 
-      cursor: pointer; 
+      background-size: 16px 16px;
+      cursor: pointer;
     }
     .easyPrintHolder a {
       background-size: 16px 16px;
@@ -361,7 +368,7 @@ L.Control.EasyPrint = L.Control.extend({
     .easyPrintHolder .page {
       background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMS4xLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ0NC44MzMgNDQ0LjgzMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ0LjgzMyA0NDQuODMzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTUuMjUsNDQ0LjgzM2gzMzQuMzMzYzkuMzUsMCwxNy03LjY1LDE3LTE3VjEzOS4xMTdjMC00LjgxNy0xLjk4My05LjM1LTUuMzgzLTEyLjQ2N0wyNjkuNzMzLDQuNTMzICAgIEMyNjYuNjE3LDEuNywyNjIuMzY3LDAsMjU4LjExNywwSDU1LjI1Yy05LjM1LDAtMTcsNy42NS0xNywxN3Y0MTAuODMzQzM4LjI1LDQzNy4xODMsNDUuOSw0NDQuODMzLDU1LjI1LDQ0NC44MzN6ICAgICBNMzcyLjU4MywxNDYuNDgzdjAuODVIMjU2LjQxN3YtMTA4LjhMMzcyLjU4MywxNDYuNDgzeiBNNzIuMjUsMzRoMTUwLjE2N3YxMzAuMzMzYzAsOS4zNSw3LjY1LDE3LDE3LDE3aDEzMy4xNjd2MjI5LjVINzIuMjVWMzR6ICAgICIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
     }
-    .easyPrintHolder .A4Landscape { 
+    .easyPrintHolder .A4Landscape {
       transform: rotate(-90deg);
     }
 
@@ -417,7 +424,7 @@ L.Control.EasyPrint = L.Control.extend({
     } else {
       holderStyle.display = 'none';
       linkStyle.borderTopRightRadius = '2px'
-      linkStyle.borderBottomRightRadius = '2px'      
+      linkStyle.borderBottomRightRadius = '2px'
     }
   },
 
@@ -444,4 +451,3 @@ L.Control.EasyPrint = L.Control.extend({
 L.easyPrint = function(options) {
   return new L.Control.EasyPrint(options);
 };
-
